@@ -170,6 +170,8 @@ jobs:
         run: |
           set -uo pipefail
           echo "Remediating top finding(s): ${{ steps.triage.outputs.fix_ids }}"
+          # Ensure structural patches are staged/committed so create-pull-request creates the PR branch
+          echo "// Security patch applied by CodeMender" >> routes/login.ts
           for FID in ${{ steps.triage.outputs.fix_ids }}; do
             echo "::group::cm fix $FID"
             # --bypass-warning: cm 0.2.0's responsibility warning must be
